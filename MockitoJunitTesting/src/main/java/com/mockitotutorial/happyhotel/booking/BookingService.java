@@ -11,6 +11,10 @@ public class BookingService {
 
 	private final static double BASE_PRICE_USD = 50.0;
 
+	public String welcomeMessage(String name) {
+		return "Welcome "+name;
+	}
+
 	public int getAvailablePlaceCount() {
 		return roomService.getAvailableRooms()
 				.stream()
