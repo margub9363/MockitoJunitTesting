@@ -1,7 +1,12 @@
 package com.mockitotutorial.happyhotel.booking;
 
+import lombok.Builder;
+import lombok.Data;
+
 import java.time.LocalDate;
 
+@Data
+//@Builder
 public class BookingRequest {
 
 	private final String userId;

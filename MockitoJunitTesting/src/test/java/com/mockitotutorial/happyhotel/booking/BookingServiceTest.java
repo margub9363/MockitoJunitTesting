@@ -10,7 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.awt.print.Book;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +31,7 @@ class BookingServiceTest {
     @Mock
     MailSender mailSender;
 
-    @InjectMocks
+    @Spy
     private BookingService bookingService;
 
     @Test
@@ -55,4 +55,14 @@ class BookingServiceTest {
         int actual = bookingService1.getAvailablePlaceCount();
         assertEquals(18, actual);
     }
+
+    @Test
+    void calculatePrice_testWithPrePaid(){
+        BookingRequest bookingRequest = new BookingRequest("21",(LocalDate.parse("2007-12-05")),(LocalDate.parse("2007-12-08")),10,false);
+        BookingService bookingService1 = new BookingService(paymentService,roomService,bookingDAO,mailSender);
+        double actualValue = bookingService1.calculatePrice(bookingRequest);
+        assertEquals(actualValue,1500.0);
+    }
+
+
 }

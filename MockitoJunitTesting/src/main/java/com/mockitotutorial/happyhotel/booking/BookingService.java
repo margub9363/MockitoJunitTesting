@@ -1,6 +1,9 @@
 package com.mockitotutorial.happyhotel.booking;
 
+import lombok.Builder;
+
 import java.time.temporal.ChronoUnit;
+@Builder
 
 public class BookingService {
 
