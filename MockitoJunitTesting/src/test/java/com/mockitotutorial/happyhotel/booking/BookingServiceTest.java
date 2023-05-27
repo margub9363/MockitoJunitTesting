@@ -5,6 +5,8 @@ import org.junit.jupiter.api.*;
 //import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -40,4 +42,20 @@ public class BookingServiceTest {
         assertEquals(expected,actual);
     }
 
+    @Test
+    void getAvailablePlaceCount_test() {
+
+//        since in line no 27 we are mocking roomserive thats why we are givinng values below. If we would have used actual class then we should have not required to pass values below
+//        given
+        List<Room> availableRooms = new ArrayList<>();
+        availableRooms.add(new Room("1",1));
+        availableRooms.add(new Room("2",2));
+        availableRooms.add(new Room("3",3));
+        when(roomServiceMock.getAvailableRooms()).thenReturn(availableRooms);
+//        when
+        int actualValue = bookingService.getAvailablePlaceCount();
+        int expectedValue = 6;
+//        then
+        assertEquals(actualValue,expectedValue);
+    }
 }
