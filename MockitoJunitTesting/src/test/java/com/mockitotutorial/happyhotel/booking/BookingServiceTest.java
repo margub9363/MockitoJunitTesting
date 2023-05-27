@@ -1,6 +1,7 @@
 package com.mockitotutorial.happyhotel.booking;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.function.Executable;
 //import org.junit.runner.RunWith;
 //import org.mockito.junit.MockitoJUnitRunner;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 //@RunWith(MockitoJUnitRunner.class)
@@ -82,5 +84,17 @@ public class BookingServiceTest {
         assertEquals(actualFirst,1);
         assertEquals(actualSecond,5);
         assertEquals(actualThird,9);
+    }
+
+    @Test
+    void makeBooking_shouldThrowExceptionWhenNoRoomAvailable() {
+//        given
+        BookingRequest bookingRequest = new BookingRequest("1", LocalDate.of(2020,01,01),LocalDate.of(2020,01,05),2,false);
+        when(roomServiceMock.findAvailableRoomId(bookingRequest)).thenThrow(new BusinessException());
+
+//        when
+        Executable executable = () -> bookingService.makeBooking(bookingRequest);
+//        then
+        assertThrows(BusinessException.class,executable);
     }
 }
