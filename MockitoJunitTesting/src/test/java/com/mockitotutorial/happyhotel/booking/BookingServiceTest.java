@@ -58,4 +58,29 @@ public class BookingServiceTest {
 //        then
         assertEquals(actualValue,expectedValue);
     }
+
+    @Test
+    void getAvailablePlaceCount_MultipleReturnValues_whenCalledMultipleTimes() {
+
+//        since in line no 27 we are mocking roomserive thats why we are givinng values below. If we would have used actual class then we should have not required to pass values below
+//        given
+        List<Room> availableRooms = new ArrayList<>();
+        availableRooms.add(new Room("1",1));
+     List<Room> availableRoomOnSecondCall = new ArrayList<>();
+        availableRoomOnSecondCall.add(new Room("2",2));
+        availableRoomOnSecondCall.add(new Room("3",3));
+        List<Room> availableRoomOnThirdCall = new ArrayList<>();
+        availableRoomOnThirdCall.add(new Room("4",4));
+        availableRoomOnThirdCall.add(new Room("5",5));
+        when(roomServiceMock.getAvailableRooms()).thenReturn(availableRooms).thenReturn(availableRoomOnSecondCall).thenReturn(availableRoomOnThirdCall);
+//        when
+        int actualFirst = bookingService.getAvailablePlaceCount();
+        int actualSecond = bookingService.getAvailablePlaceCount();
+        int actualThird = bookingService.getAvailablePlaceCount();
+
+//        then
+        assertEquals(actualFirst,1);
+        assertEquals(actualSecond,5);
+        assertEquals(actualThird,9);
+    }
 }
